@@ -32,5 +32,22 @@ My code / Refrence :
 
 <a href="https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017">Asis ctf </a>
 
+##### Null-byte overflow
+<a href="https://hackerbuck.github.io/blog/ctfx.html">ctf(x)</a>
 
+##### Jump to shellcode
+
+<a href="https://hackerbuck.github.io/blog/csaaw2k12_exp500.html"></a>
+
+##### Bypass Shellcode filters 
+
+<a href="https://hackerbuck.github.io/blog/csaw2k12_exp400.html"></a>
+
+##### Bind tcp shellcode
+
+<a href="https://hackerbuck.github.io/blog/csaw2k13_exp200.html"></a>
+
+##### Pipe exploit 
+
+<a href="https://hackerbuck.github.io/blog/secure_file_reader.html"></a>
 
