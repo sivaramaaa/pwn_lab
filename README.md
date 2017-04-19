@@ -7,8 +7,8 @@ Short notes :
 My code / Refrence :
 
 
-<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">33c3 ctf :Heap overflow</a>
-<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">plaidctf 2016: Basic UAF </a> 
+<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">33c3ctf : Heap overflow</a><br>
+<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">plaidctf 2016: Basic UAF </a> <br>
 
 ### Format srting Exploit :
 1) Leak all string in stack using direct parameter access 
@@ -18,8 +18,8 @@ My code / Refrence :
 My code / Refrence :
 
 
-<a href="https://github.com/sivaramaaa/My_tools/blob/master/Format_String">TOol to automate</a>
-<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/Sharifctf/Brute.py">Sharif ctf : Leak stack</a>
+<a href="https://github.com/sivaramaaa/My_tools/blob/master/Format_String">Tool to automate</a> <br>
+<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/Sharifctf/Brute.py">Sharifctf : Leak stack</a><br>
 
 
 ### Stack based exploit :
@@ -29,6 +29,7 @@ My code / Refrence :
 All parameters must be in registers and not on stack 
 
 My code / Refrence :
+
 <a href="https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017">Asis ctf </a>
 
 
