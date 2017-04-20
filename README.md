@@ -45,15 +45,15 @@ My code / Refrence :
 
 <a href="https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017">Asis ctf </a>
 
-##### Random exploits       <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/random_exploits.md">Random explit </a>
+##### Random exploits &nbsp; &nbsp;<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/random_exploits.md">Random explit </a>
 
-##### Null-byte overflow    <a href="https://hackerbuck.github.io/blog/ctfx.html">ctf(x)</a>
+##### Null-byte overflow &nbsp; &nbsp;<a href="https://hackerbuck.github.io/blog/ctfx.html">ctf(x)</a>
 
-##### Jump to shellcode      <a href="https://hackerbuck.github.io/blog/csaaw2k12_exp500.html"> Ret2Shellcode </a>
+##### Jump to shellcode &nbsp;&nbsp; <a href="https://hackerbuck.github.io/blog/csaaw2k12_exp500.html"> Ret2Shellcode </a>
 
-##### Bypass Shellcode filters    <a href="https://hackerbuck.github.io/blog/csaw2k12_exp400.html">Bypass filters</a>
+##### Bypass Shellcode filters &nbsp; &nbsp;<a href="https://hackerbuck.github.io/blog/csaw2k12_exp400.html">Bypass filters</a>
 
-##### Bind tcp shellcode      <a href="https://hackerbuck.github.io/blog/csaw2k13_exp200.html">Bind tcp shell</a>
+##### Bind tcp shellcode  &nbsp; &nbsp; <a href="https://hackerbuck.github.io/blog/csaw2k13_exp200.html">Bind tcp shell</a>
 
-##### Pipe exploit        <a href="https://hackerbuck.github.io/blog/secure_file_reader.html">Named Pipes</a>
+##### Pipe exploit   &nbsp; &nbsp; <a href="https://hackerbuck.github.io/blog/secure_file_reader.html">Named Pipes</a>
 
