@@ -4,7 +4,7 @@ Short notes :
 
 ### Heap Exploit
 
-##### UAF vul 
+#### UAF vul 
 
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/babyuaf.py">BCTF: Babyuse</a><br>
 
@@ -43,17 +43,18 @@ All parameters must be in registers and not on stack
 
 My code / Refrence :
 
-<a href="https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017">Asis ctf </a>
+[Asis ctf ](https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017)
 
-##### Random exploits &nbsp; &nbsp;<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/random_exploits.md">Random explit </a>
 
-##### Null-byte overflow &nbsp; &nbsp;<a href="https://hackerbuck.github.io/blog/ctfx.html">ctf(x)</a>
+[Random explit](https://github.com/sivaramaaa/CTF_repo/blob/master/random_exploits.md)
 
-##### Jump to shellcode &nbsp;&nbsp; <a href="https://hackerbuck.github.io/blog/csaaw2k12_exp500.html"> Ret2Shellcode </a>
+[ctf(x)  Null-byte overflow  ](https://hackerbuck.github.io/blog/ctfx.html)
 
-##### Bypass Shellcode filters &nbsp; &nbsp;<a href="https://hackerbuck.github.io/blog/csaw2k12_exp400.html">Bypass filters</a>
+[Ret2Shellcode](https://hackerbuck.github.io/blog/csaaw2k12_exp500.html)
 
-##### Bind tcp shellcode  &nbsp; &nbsp; <a href="https://hackerbuck.github.io/blog/csaw2k13_exp200.html">Bind tcp shell</a>
+[Bypass Shellcode filters](https://hackerbuck.github.io/blog/csaw2k12_exp400.html)
 
-##### Pipe exploit   &nbsp; &nbsp; <a href="https://hackerbuck.github.io/blog/secure_file_reader.html">Named Pipes</a>
+[Bind tcp shell](https://hackerbuck.github.io/blog/csaw2k13_exp200.html)
+
+[Pipe Exploit ](https://hackerbuck.github.io/blog/secure_file_reader.html)
 
