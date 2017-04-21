@@ -35,6 +35,8 @@ If u don't have control over arguments to system() then we can use this gadget
 U can fid this gadget using the tool one_gadget . 
 Usage : one_gadget -f libc.so 
 
+[Oneshot TJCTF](https://github.com/sivaramaaa/CTF_repo/blob/master/tjctf_oneshot.py)
+
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/babyuaf.py">BCTF: Babyuse</a> <br>
 
 ##### 64 bit rop
