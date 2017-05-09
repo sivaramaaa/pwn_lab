@@ -4,16 +4,19 @@ Short notes :
 
 ### Heap Exploit
 
-#### UAF vul 
+#### Unlink vuln 
+
+[Defcon Ctf - beatmeonthedl](https://github.com/sivaramaaa/CTF_repo/blob/master/DefconCTF_2017/beatmeonthedl.py)
+
+#### UAF vuln
 
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/babyuaf.py">BCTF: Babyuse</a><br>
+<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/plaidctf_2016/unix_time_formater.py">plaidctf 2016: Basic UAF </a> <br>
 
-
-My code / Refrence :
-
+#### Heap overflow 
 
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">33c3ctf : Heap overflow</a><br>
-<a href="https://github.com/sivaramaaa/CTF_repo/blob/master/33c3ctf/exploit.py">plaidctf 2016: Basic UAF </a> <br>
+
 
 ### Format srting Exploit :
 1) Leak all string in stack using direct parameter access 
@@ -39,13 +42,22 @@ Usage : one_gadget -f libc.so
 
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/babyuaf.py">BCTF: Babyuse</a> <br>
 
+#### Return-oriented programming (ROP)
+
+
 ##### 64 bit rop
 
 All parameters must be in registers and not on stack 
 
-My code / Refrence :
-
 [Asis ctf 64-bit rop](https://github.com/sivaramaaa/CTF_repo/tree/master/asisctf-2017)
+
+##### Return to shellcode
+
+Load and execute !!! 
+
+[Defcon ctf - smashme](https://github.com/sivaramaaa/CTF_repo/blob/master/DefconCTF_2017/smashme.py)
+
+[Ret2Shellcode](https://hackerbuck.github.io/blog/csaaw2k12_exp500.html)
 
 ###### Other stack based exploit 
 
@@ -53,7 +65,6 @@ My code / Refrence :
 
 [ctf(x)  Null-byte overflow  ](https://hackerbuck.github.io/blog/ctfx.html)
 
-[Ret2Shellcode](https://hackerbuck.github.io/blog/csaaw2k12_exp500.html)
 
 [Bypass Shellcode filters](https://hackerbuck.github.io/blog/csaw2k12_exp400.html)
 
