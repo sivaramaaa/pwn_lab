@@ -61,6 +61,8 @@ Load and execute !!!
 
 ###### Other stack based exploit 
 
+[Stage'ed Shellcode](https://github.com/sivaramaaa/CTF_repo/blob/master/FireEye/stage_shellcode.py)
+
 [Random explit](https://github.com/sivaramaaa/CTF_repo/blob/master/random_exploits.md)
 
 [ctf(x)  Null-byte overflow  ](https://hackerbuck.github.io/blog/ctfx.html)
