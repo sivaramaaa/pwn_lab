@@ -1,4 +1,4 @@
-### Unlink Explot
+## Unlink Explot
 
 ```C
 #define unlink(P, BK, FD) {                                            
@@ -44,7 +44,8 @@ hence if size is 0 then it points itself hence it's inuse_bit is 0 hence free() 
      __builtin_expect (FD->bk != P || BK->fd != P, 0)
 
 
-### House of mind 
+
+## House of Prime 
 
 
 #### 1) Ingredients 
@@ -196,7 +197,10 @@ for(;;) {
                      iii) jmp instruction in &(av->bins[0]) {unsorted_chunks(av)->bk = bck  }
                      iv)  bck->fd = EIP = &(av->bins[0]) // place a shellcode here 
          
-### House of mind
+
+
+## House of mind
+
 
 ####  1) Ingredients:
 
@@ -336,3 +340,22 @@ STACK:   ^
          |
 ```
 
+
+## House of Force 
+
+The most expected one and the easiest too :)
+
+#### Ingredients:
+
+  *  The exploiter must be able to overwrite the top chunk (i.e. the overflow must happen in a chunk that allows to overwrite the wilderness
+  *  There is a malloc() call with an exploiter-controllable size
+  *  There is another malloc() call where data are controlled by the exploiter
+
+#### Exploit 
+
+    1) overflow wilderness chunk and make it's size to 0xffffffff
+    2) malloc(len) split the chunk so that wilderness chunk will now point to eip 
+    3) malloc(16) now u get eip and overwrite it 
+    
+    NOTE : while calculating len u have to iadjust it manually  since the len will be 8 byte  alligned  
+    
