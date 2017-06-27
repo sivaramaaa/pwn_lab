@@ -405,7 +405,31 @@ checked_request2size(bytes, nb);
       }
 }
 
-
+for(;;)
+{
+       while( iterate unsorted chunk){   [...]   }
+       if(! in_smallbin_range(nb))
+       {
+            idx = largebin_index(nb);
+	    bin = bin_at(av,idx);
+	    for(victim=last(bin;;victim=victim->bk))
+	      {
+	           if(chunk_size >= nb)
+		     {
+		     unlink();  <<<<<<<<====== possible vector ,but  unlink hardened !!!! 
+		     }
+	      }
+        }
+	else
+	{ 
+	     iterate to other bins
+	     /* Unlink */
+	     
+	     bck = victim->bk ;   <<<<<<<<<<========== exploit vector
+	     bin->bk = bck ;
+	     [...]
+	}
+}
 ```
     
 #### Exploit 
@@ -419,3 +443,13 @@ checked_request2size(bytes, nb);
        * now bin->bk overwriiten with  chunk_b->bk(i.e corrupted with say a stack value)
        * also u have to control 3 values in stack to bypass the hardening 
     6) again malloc(same_len) would return stack value for us to play with !!!!
+    
+    
+####  Large bin corruption 
+   1) same until u place large bin from unsorted to large bin , corrupting
+   2) but next malloc() is not same size but lesser
+        * now it searches corresponding bin , but would fail !  (512 < requested_size < size_in_large_bin )
+	* searches next bin , and finds it and trigers the vuln
+   3) overwrite the victim->size so that (victim->size -nb = 8 ) && avoid set_foot causing segfault 	
+   4) return to user controlled stack location and set the stack_fake_chunk-> size 
+      so that set_foot doesen't cause a problem again 
