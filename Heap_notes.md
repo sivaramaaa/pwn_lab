@@ -359,3 +359,63 @@ The most expected one and the easiest too :)
     
     NOTE : while calculating len u have to iadjust it manually  since the len will be 8 byte  alligned  
     
+## House of Lore
+
+#### Ingredients:
+
+
+   * Two chunks are allocated and the first one is overflowable
+   * The second chunk is freed
+   * Another (potentially more) chunk, bigger than the second one, is allocated
+   * A new chunk with the same size of the second one is allocated
+   * Another chunk with the same size of the second one is allocated
+
+#### Code flow
+
+```C
+
+
+void _int_malloc(mstate av, size_t bytes)
+{
+checked_request2size(bytes, nb);
+  if ((unsigned long)(nb) <= (unsigned long)(av->max_fast)) {
+    [...]
+  }
+    if (in_smallbin_range(nb)) {
+    idx = smallbin_index(nb);
+    bin = bin_at(av,idx);
+
+    if ( (victim = last(bin)) != bin) {
+      if (victim == 0) /* initialization check */
+        malloc_consolidate(av);
+      else {
+        bck = victim->bk;
+	if (bck->fd != victim)
+	 {
+	 printf("small bin corruption !!!\n");       <<<<<==== hardening 
+	 }
+        set_inuse_bit_at_offset(victim, nb);
+        bin->bk = bck;       <<<=============  Exploit vector
+        bck->fd = bin;
+
+        if (av != &main_arena)
+	  victim->size |= NON_MAIN_ARENA;
+        check_malloced_chunk(av, victim, nb);
+        return chunk2mem(victim);
+      }
+}
+
+
+```
+    
+#### Exploit 
+
+##### Small bin corruption 
+    1) We have one overflowable chunk (i.e chunk_a) , ond chunk_b behind it 
+    2) now free chunk_b , now that chunk goes into unsorted bin list
+    3) now malloc(large_len)  , now chunk_b moves into small bin 
+    4) now corrupt chunk_b  using chunk_a
+    5) now malloc(same_len) makes free() to unlink our currupted chunk_b , and trigers vuln 
+       * now bin->bk overwriiten with  chunk_b->bk(i.e corrupted with say a stack value)
+       * also u have to control 3 values in stack to bypass the hardening 
+    6) again malloc(same_len) would return stack value for us to play with !!!!
