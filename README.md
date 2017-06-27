@@ -8,6 +8,8 @@ Short notes :
 
 [Defcon Ctf - beatmeonthedl](https://github.com/sivaramaaa/CTF_repo/blob/master/DefconCTF_2017/beatmeonthedl.py)
 
+[House of Lore](https://github.com/sivaramaaa/pwn_lab/blob/master/exploits/hole_exp.py) : Small bin corruption  
+
 #### UAF vuln
 
 <a href="https://github.com/sivaramaaa/CTF_repo/blob/master/babyuaf.py">BCTF: Babyuse</a><br>
