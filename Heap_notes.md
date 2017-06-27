@@ -453,3 +453,20 @@ for(;;)
    3) overwrite the victim->size so that (victim->size -nb = 8 ) && avoid set_foot causing segfault 	
    4) return to user controlled stack location and set the stack_fake_chunk-> size 
       so that set_foot doesen't cause a problem again 
+      
+## House of spirit
+
+####Ingredients:
+
+	* A stack overflow that allows to overwrite a variable containing a chunk address returned by a malloc() call
+	* The aforementioned chunk is freed
+	* Another chunk is allocated
+	* The attacker can control the content of this last chunk
+#### Exploit
+
+	1) overwrite free() parametere with a stack value such that :
+		* it's addr-8 i.e size field is in fastbin range
+		* it's next chunk->size is set (stack_addr+size == some val)
+	2) now malloc would return pointer into stack to pwn it !!
+	
+	
